@@ -30,12 +30,18 @@ fetch('content.json', { cache: 'no-store' })
     document.getElementById('niveles-list').innerHTML = (d.niveles || []).map(n =>
       `<div class="nivel"><div class="dot" style="background:${esc(n.color)}">${esc(n.nombre[0])}</div><h3>${esc(n.nombre)}</h3><p>${esc(n.edad)}</p><p><strong>${esc(n.horario)}</strong></p></div>`).join('');
 
-    // Cada actividad puede tener "foto" (una) o "fotos" (varias: se ve la primera y al tocar se abre el álbum)
-    const gal = (d.galeria || []).map(g => ({ titulo: g.titulo, fotos: g.fotos && g.fotos.length ? g.fotos : [g.foto] }));
-    document.getElementById('galeria-list').innerHTML = gal.map(g =>
-      `<figure class="foto"><img src="${esc(g.fotos[0])}" alt="${esc(g.titulo)}" loading="lazy">${g.fotos.length > 1 ? `<span class="foto-badge">▣ ${g.fotos.length}</span>` : ''}<figcaption>${esc(g.titulo)}</figcaption></figure>`).join('');
-
-    initVisor(gal);
+    // Cada actividad tiene una lista de "fotos". Las que aún no se suben a la carpeta fotos/ se saltan solas;
+    // si no hay ninguna, se muestra la imagen de "respaldo".
+    const existe = src => new Promise(ok => { const i = new Image(); i.onload = () => ok(true); i.onerror = () => ok(false); i.src = src; });
+    Promise.all((d.galeria || []).map(async g => {
+      const lista = g.fotos && g.fotos.length ? g.fotos : (g.foto ? [g.foto] : []);
+      const ok = (await Promise.all(lista.map(existe))).map((e, k) => e ? lista[k] : null).filter(Boolean);
+      return { titulo: g.titulo, fotos: ok.length ? ok : [g.respaldo || 'logo.svg'] };
+    })).then(gal => {
+      document.getElementById('galeria-list').innerHTML = gal.map(g =>
+        `<figure class="foto"><img src="${esc(g.fotos[0])}" alt="${esc(g.titulo)}">${g.fotos.length > 1 ? `<span class="foto-badge">▣ ${g.fotos.length}</span>` : ''}<figcaption>${esc(g.titulo)}</figcaption></figure>`).join('');
+      initVisor(gal);
+    });
 
     const t = d.testimonios || [];
     document.getElementById('testimonios').hidden = t.length === 0;

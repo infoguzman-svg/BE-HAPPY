@@ -26,14 +26,12 @@
   "jornadas_nota": "Contamos con horario extendido. Consulta por jornada completa y media jornada.",
 
   "galeria": [
-    { "titulo": "Semana del Jardín", "foto": "fotos/semana.svg" },
-    { "titulo": "Día de rodados 🚲🛴", "foto": "fotos/rodados.svg" },
-    { "titulo": "Fonda Be Happy 🇨🇱", "foto": "fotos/fonda.svg" },
-    { "titulo": "Día del cine '26", "foto": "fotos/cine.svg" },
-    { "titulo": "Día del niño '26", "foto": "fotos/nino.svg" },
-    { "titulo": "Cumpleaños 2026", "fotos": ["fotos/cumpleanos-2.jpg", "fotos/cumpleanos-3.jpg", "fotos/cumpleanos-1.jpg"] },
-    { "titulo": "Feliz día papá ❤️", "foto": "fotos/papa.svg" },
-    { "titulo": "Feliz día mamá", "foto": "fotos/mama.svg" }
+    { "titulo": "Cumpleaños 2026", "fotos": ["fotos/cumpleanos-2.jpg", "fotos/cumpleanos-3.jpg", "fotos/cumpleanos-1.jpg"], "respaldo": "fotos/cumpleanos.svg" },
+    { "titulo": "Fonda Be Happy 🇨🇱", "fotos": ["fotos/fonda-1.jpg", "fotos/fonda-2.jpg", "fotos/fonda-3.jpg"], "respaldo": "fotos/fonda.svg" },
+    { "titulo": "Día del cine '26", "fotos": ["fotos/cine-1.jpg", "fotos/cine-2.jpg", "fotos/cine-3.jpg"], "respaldo": "fotos/cine.svg" },
+    { "titulo": "Día del niño '26", "fotos": ["fotos/nino-1.jpg", "fotos/nino-2.jpg", "fotos/nino-3.jpg"], "respaldo": "fotos/nino.svg" },
+    { "titulo": "Feliz día papá ❤️", "fotos": ["fotos/papa-1.jpg", "fotos/papa-2.jpg", "fotos/papa-3.jpg"], "respaldo": "fotos/papa.svg" },
+    { "titulo": "Feliz día mamá", "fotos": ["fotos/mama-1.jpg", "fotos/mama-2.jpg", "fotos/mama-3.jpg"], "respaldo": "fotos/mama.svg" }
   ],
 
   "testimonios": [
