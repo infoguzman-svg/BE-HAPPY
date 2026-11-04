@@ -23,7 +23,7 @@
     { "nombre": "Medio Mayor", "edad": "3 a 4 años", "horario": "Editar horario", "color": "#3fb24a" },
     { "nombre": "Transición", "edad": "4 a 6 años", "horario": "Editar horario", "color": "#2f7fd8" }
   ],
-  "jornadas_nota": "Consulta por jornada completa, media jornada y extensión horaria.",
+  "jornadas_nota": "Contamos con horario extendido. Consulta por jornada completa y media jornada.",
 
   "galeria": [
     { "titulo": "Semana del Jardín", "foto": "fotos/semana.svg" },
@@ -31,7 +31,7 @@
     { "titulo": "Fonda Be Happy 🇨🇱", "foto": "fotos/fonda.svg" },
     { "titulo": "Día del cine '26", "foto": "fotos/cine.svg" },
     { "titulo": "Día del niño '26", "foto": "fotos/nino.svg" },
-    { "titulo": "Cumpleaños 2026", "foto": "fotos/cumpleanos.svg" },
+    { "titulo": "Cumpleaños 2026", "fotos": ["fotos/cumpleanos-2.jpg", "fotos/cumpleanos-3.jpg", "fotos/cumpleanos-1.jpg"] },
     { "titulo": "Feliz día papá ❤️", "foto": "fotos/papa.svg" },
     { "titulo": "Feliz día mamá", "foto": "fotos/mama.svg" }
   ],

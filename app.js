@@ -30,10 +30,12 @@ fetch('content.json', { cache: 'no-store' })
     document.getElementById('niveles-list').innerHTML = (d.niveles || []).map(n =>
       `<div class="nivel"><div class="dot" style="background:${esc(n.color)}">${esc(n.nombre[0])}</div><h3>${esc(n.nombre)}</h3><p>${esc(n.edad)}</p><p><strong>${esc(n.horario)}</strong></p></div>`).join('');
 
-    document.getElementById('galeria-list').innerHTML = (d.galeria || []).map(g =>
-      `<figure class="foto"><img src="${esc(g.foto)}" alt="${esc(g.titulo)}" loading="lazy"><figcaption>${esc(g.titulo)}</figcaption></figure>`).join('');
+    // Cada actividad puede tener "foto" (una) o "fotos" (varias: se ve la primera y al tocar se abre el álbum)
+    const gal = (d.galeria || []).map(g => ({ titulo: g.titulo, fotos: g.fotos && g.fotos.length ? g.fotos : [g.foto] }));
+    document.getElementById('galeria-list').innerHTML = gal.map(g =>
+      `<figure class="foto"><img src="${esc(g.fotos[0])}" alt="${esc(g.titulo)}" loading="lazy">${g.fotos.length > 1 ? `<span class="foto-badge">▣ ${g.fotos.length}</span>` : ''}<figcaption>${esc(g.titulo)}</figcaption></figure>`).join('');
 
-    initVisor(d.galeria || []);
+    initVisor(gal);
 
     const t = d.testimonios || [];
     document.getElementById('testimonios').hidden = t.length === 0;
@@ -47,22 +49,30 @@ const btn = document.querySelector('.menu-btn'), links = document.querySelector(
 btn.addEventListener('click', () => { const o = links.classList.toggle('open'); btn.setAttribute('aria-expanded', o); });
 links.addEventListener('click', e => { if (e.target.tagName === 'A') links.classList.remove('open'); });
 
-// Visor: al tocar una foto se abre en grande y se desliza hacia los lados
-function initVisor(fotos) {
-  if (!fotos.length) return;
+// Visor: al tocar una foto se abre en grande y se desliza hacia los lados.
+// Si la actividad tiene varias fotos, muestra solo ese álbum; si tiene una, recorre todas las actividades.
+function initVisor(gal) {
+  if (!gal.length) return;
   const v = document.createElement('div');
   v.className = 'visor';
-  v.innerHTML = `<div class="visor-count"></div>
-    <div class="visor-track">${fotos.map(g => `<figure class="visor-slide"><img src="${esc(g.foto)}" alt="${esc(g.titulo)}" loading="lazy"><figcaption>${esc(g.titulo)}</figcaption></figure>`).join('')}</div>
+  v.innerHTML = `<div class="visor-count"></div><div class="visor-track"></div>
     <button class="visor-btn visor-close" aria-label="Cerrar">✕</button>
     <button class="visor-btn visor-prev" aria-label="Anterior">‹</button>
     <button class="visor-btn visor-next" aria-label="Siguiente">›</button>`;
   document.body.appendChild(v);
   const track = v.querySelector('.visor-track'), count = v.querySelector('.visor-count');
+  let n = 0;
   const idx = () => Math.round(track.scrollLeft / track.clientWidth);
-  const go = i => track.scrollTo({ left: Math.max(0, Math.min(fotos.length - 1, i)) * track.clientWidth, behavior: 'smooth' });
-  const upd = () => count.textContent = (idx() + 1) + ' / ' + fotos.length;
+  const go = i => track.scrollTo({ left: Math.max(0, Math.min(n - 1, i)) * track.clientWidth, behavior: 'smooth' });
+  const upd = () => count.textContent = n > 1 ? (idx() + 1) + ' / ' + n : '';
   const close = () => { v.classList.remove('open'); document.body.style.overflow = ''; };
+  const open = (slides, start) => {
+    n = slides.length;
+    track.innerHTML = slides.map(s => `<figure class="visor-slide"><img src="${esc(s.src)}" alt="${esc(s.titulo)}"><figcaption>${esc(s.titulo)}</figcaption></figure>`).join('');
+    v.classList.add('open'); document.body.style.overflow = 'hidden';
+    v.querySelectorAll('.visor-prev,.visor-next').forEach(b => b.hidden = n < 2);
+    track.scrollLeft = start * track.clientWidth; upd();
+  };
   track.addEventListener('scroll', upd);
   v.querySelector('.visor-close').onclick = close;
   v.querySelector('.visor-prev').onclick = () => go(idx() - 1);
@@ -74,8 +84,10 @@ function initVisor(fotos) {
     if (e.key === 'ArrowRight') go(idx() + 1);
     if (e.key === 'ArrowLeft') go(idx() - 1);
   });
+  const sueltas = gal.filter(g => g.fotos.length === 1);
   document.querySelectorAll('#galeria-list .foto').forEach((f, i) => f.addEventListener('click', () => {
-    v.classList.add('open'); document.body.style.overflow = 'hidden';
-    track.scrollLeft = i * track.clientWidth; upd();
+    const g = gal[i];
+    if (g.fotos.length > 1) open(g.fotos.map((src, k) => ({ src, titulo: `${g.titulo} · ${k + 1}/${g.fotos.length}` })), 0);
+    else open(sueltas.map(s => ({ src: s.fotos[0], titulo: s.titulo })), sueltas.indexOf(g));
   }));
 }
