@@ -41,7 +41,9 @@ h2{font-size:clamp(1.8rem,4vw,2.5rem);text-align:center;color:var(--blue)}
 .kicker{font-weight:700;color:var(--muted);margin:0 0 8px}
 .eslogan{font-family:"Baloo 2";font-size:1.5rem;color:var(--blue);margin:0 0 10px}
 .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
-.hero-art{background:var(--soft);border-radius:50%;aspect-ratio:1;display:grid;place-items:center;padding:12%;box-shadow:0 0 0 12px #fff,0 0 0 20px var(--yellow)}
+.hero-art{display:flex;justify-content:center}
+.hero-art img{width:min(320px,100%);height:auto;border-radius:50%;background:#fff;box-shadow:0 0 0 6px #fff,0 0 0 12px var(--yellow),0 14px 36px rgba(0,0,0,.08);transition:transform .4s ease}
+.hero-art img:hover{transform:rotate(-4deg) scale(1.03)}
 
 .section{padding:70px 24px;max-width:1100px;margin:0 auto}
 .section.alt{max-width:none;background:var(--soft)}
@@ -89,8 +91,31 @@ h2{font-size:clamp(1.8rem,4vw,2.5rem);text-align:center;color:var(--blue)}
   .brand span{font-size:.95rem}
   .hero{grid-template-columns:1fr;padding:36px 16px;text-align:center}
   .hero-cta{justify-content:center}
-  .hero-art{max-width:260px;margin:0 auto;order:-1}
+  .hero-art{order:-1}
+  .hero-art img{width:200px}
   .section{padding:50px 16px}
   .contacto{grid-template-columns:1fr}
 }
 .aviso{display:inline-block;background:var(--yellow);color:var(--ink);font-weight:700;padding:8px 16px;border-radius:999px;margin:0 0 14px}
+
+/* ---- Interacciones sutiles al pasar el mouse ---- */
+.card,.nivel,.testimonio,.foto,.contacto-info p,.btn,.wa-float{transition:transform .25s ease,box-shadow .25s ease,background-color .25s ease,color .25s ease}
+.card:hover,.nivel:hover,.testimonio:hover{transform:translateY(-5px);box-shadow:0 14px 30px rgba(0,0,0,.10)}
+.card .ico{display:inline-block;transition:transform .25s ease}
+.card:hover .ico{transform:scale(1.15) rotate(-6deg)}
+.nivel .dot{transition:transform .25s ease}
+.nivel:hover .dot{transform:scale(1.1)}
+.foto{transition:transform .25s ease,box-shadow .25s ease}
+.foto:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.14)}
+.btn:hover{box-shadow:0 8px 18px rgba(0,0,0,.12)}
+.btn-ghost:hover{background:var(--blue);color:#fff}
+.btn-wa:hover{background:#1ebe5b}
+.wa-float:hover{transform:scale(1.08)}
+.links a:not(.btn){position:relative}
+.links a:not(.btn)::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;border-radius:2px;background:var(--pink);transform:scaleX(0);transition:transform .25s ease}
+.links a:not(.btn):hover::after{transform:scaleX(1)}
+.contacto-info a{transition:color .2s}
+.contacto-info a:hover{color:var(--pink)}
+.contacto iframe{transition:box-shadow .25s ease}
+.contacto iframe:hover{box-shadow:0 14px 30px rgba(0,0,0,.10)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
