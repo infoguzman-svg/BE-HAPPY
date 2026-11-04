@@ -33,6 +33,8 @@ fetch('content.json', { cache: 'no-store' })
     document.getElementById('galeria-list').innerHTML = (d.galeria || []).map(g =>
       `<figure class="foto"><img src="${esc(g.foto)}" alt="${esc(g.titulo)}" loading="lazy"><figcaption>${esc(g.titulo)}</figcaption></figure>`).join('');
 
+    initVisor(d.galeria || []);
+
     const t = d.testimonios || [];
     document.getElementById('testimonios').hidden = t.length === 0;
     document.getElementById('testimonios-list').innerHTML = t.map(x =>
@@ -44,3 +46,36 @@ document.getElementById('year').textContent = new Date().getFullYear();
 const btn = document.querySelector('.menu-btn'), links = document.querySelector('.links');
 btn.addEventListener('click', () => { const o = links.classList.toggle('open'); btn.setAttribute('aria-expanded', o); });
 links.addEventListener('click', e => { if (e.target.tagName === 'A') links.classList.remove('open'); });
+
+// Visor: al tocar una foto se abre en grande y se desliza hacia los lados
+function initVisor(fotos) {
+  if (!fotos.length) return;
+  const v = document.createElement('div');
+  v.className = 'visor';
+  v.innerHTML = `<div class="visor-count"></div>
+    <div class="visor-track">${fotos.map(g => `<figure class="visor-slide"><img src="${esc(g.foto)}" alt="${esc(g.titulo)}" loading="lazy"><figcaption>${esc(g.titulo)}</figcaption></figure>`).join('')}</div>
+    <button class="visor-btn visor-close" aria-label="Cerrar">✕</button>
+    <button class="visor-btn visor-prev" aria-label="Anterior">‹</button>
+    <button class="visor-btn visor-next" aria-label="Siguiente">›</button>`;
+  document.body.appendChild(v);
+  const track = v.querySelector('.visor-track'), count = v.querySelector('.visor-count');
+  const idx = () => Math.round(track.scrollLeft / track.clientWidth);
+  const go = i => track.scrollTo({ left: Math.max(0, Math.min(fotos.length - 1, i)) * track.clientWidth, behavior: 'smooth' });
+  const upd = () => count.textContent = (idx() + 1) + ' / ' + fotos.length;
+  const close = () => { v.classList.remove('open'); document.body.style.overflow = ''; };
+  track.addEventListener('scroll', upd);
+  v.querySelector('.visor-close').onclick = close;
+  v.querySelector('.visor-prev').onclick = () => go(idx() - 1);
+  v.querySelector('.visor-next').onclick = () => go(idx() + 1);
+  v.addEventListener('click', e => { if (e.target.classList.contains('visor-slide')) close(); });
+  document.addEventListener('keydown', e => {
+    if (!v.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowRight') go(idx() + 1);
+    if (e.key === 'ArrowLeft') go(idx() - 1);
+  });
+  document.querySelectorAll('#galeria-list .foto').forEach((f, i) => f.addEventListener('click', () => {
+    v.classList.add('open'); document.body.style.overflow = 'hidden';
+    track.scrollLeft = i * track.clientWidth; upd();
+  }));
+}
