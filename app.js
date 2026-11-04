@@ -56,7 +56,6 @@ btn.addEventListener('click', () => { const o = links.classList.toggle('open'); 
 links.addEventListener('click', e => { if (e.target.tagName === 'A') links.classList.remove('open'); });
 
 // Visor: al tocar una foto se abre en grande y se desliza hacia los lados.
-// Si la actividad tiene varias fotos, muestra solo ese álbum; si tiene una, recorre todas las actividades.
 function initVisor(gal) {
   if (!gal.length) return;
   const v = document.createElement('div');
@@ -90,10 +89,9 @@ function initVisor(gal) {
     if (e.key === 'ArrowRight') go(idx() + 1);
     if (e.key === 'ArrowLeft') go(idx() - 1);
   });
-  const sueltas = gal.filter(g => g.fotos.length === 1);
+  // Cada recuadro abre solo sus propias fotos
   document.querySelectorAll('#galeria-list .foto').forEach((f, i) => f.addEventListener('click', () => {
     const g = gal[i];
-    if (g.fotos.length > 1) open(g.fotos.map((src, k) => ({ src, titulo: `${g.titulo} · ${k + 1}/${g.fotos.length}` })), 0);
-    else open(sueltas.map(s => ({ src: s.fotos[0], titulo: s.titulo })), sueltas.indexOf(g));
+    open(g.fotos.map(src => ({ src, titulo: g.titulo })), 0);
   }));
 }
