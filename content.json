@@ -1,0 +1,52 @@
+{
+  "_instrucciones": "Edita los textos entre comillas y guarda (Commit). Vercel actualiza la web solo en 1 minuto. No borres comillas ni comas.",
+
+  "nombre": "Jardín Infantil Be Happy",
+  "eslogan": "Un lugar para crecer felices",
+  "descripcion": "Estamos ubicados en Vitacura y tenemos excelentes áreas para disfrutar el aire libre. Agenda tu visita y ven a conocernos.",
+  "aviso": "✨ ¡Matrículas 2027 abiertas! Asegura el cupo de tu niño o niña.",
+
+  "quienes_somos": {
+    "titulo": "Quiénes somos",
+    "texto": "En Be Happy acompañamos a las familias en los primeros años de sus hijos, para seguir creciendo, aprendiendo y disfrutando juntos. Celebramos cada etapa con días temáticos, fiestas y mucho juego al aire libre.",
+    "destacados": [
+      { "icono": "🎨", "titulo": "Aprender jugando", "texto": "Arte, música, cuentos y juego libre todos los días." },
+      { "icono": "🌳", "titulo": "Excelentes áreas al aire libre", "texto": "Patio para correr, explorar y andar en bicicleta y scooter." },
+      { "icono": "💛", "titulo": "Equipo cercano", "texto": "Educadoras que conocen a cada niño por su nombre." },
+      { "icono": "🎉", "titulo": "Celebraciones", "texto": "Fonda, Semana del Jardín, Día del niño, Día del cine, cumpleaños y más." }
+    ]
+  },
+
+  "niveles": [
+    { "nombre": "Sala Cuna", "edad": "3 meses a 2 años", "horario": "Editar horario", "color": "#ef4b4b" },
+    { "nombre": "Medio Menor", "edad": "2 a 3 años", "horario": "Editar horario", "color": "#f7a21b" },
+    { "nombre": "Medio Mayor", "edad": "3 a 4 años", "horario": "Editar horario", "color": "#3fb24a" },
+    { "nombre": "Transición", "edad": "4 a 6 años", "horario": "Editar horario", "color": "#2f7fd8" }
+  ],
+  "jornadas_nota": "Consulta por jornada completa, media jornada y extensión horaria.",
+
+  "galeria": [
+    { "titulo": "Semana del Jardín", "foto": "fotos/semana.svg" },
+    { "titulo": "Día de rodados 🚲🛴", "foto": "fotos/rodados.svg" },
+    { "titulo": "Fonda Be Happy 🇨🇱", "foto": "fotos/fonda.svg" },
+    { "titulo": "Día del cine '26", "foto": "fotos/cine.svg" },
+    { "titulo": "Día del niño '26", "foto": "fotos/nino.svg" },
+    { "titulo": "Cumpleaños 2026", "foto": "fotos/cumpleanos.svg" },
+    { "titulo": "Feliz día papá ❤️", "foto": "fotos/papa.svg" },
+    { "titulo": "Feliz día mamá", "foto": "fotos/mama.svg" }
+  ],
+
+  "testimonios": [
+    { "texto": "Aquí va el comentario de un apoderado (reemplazar).", "autor": "Nombre del apoderado" },
+    { "texto": "Aquí va otro comentario real de una familia (reemplazar).", "autor": "Nombre del apoderado" },
+    { "texto": "Aquí va un tercer comentario (reemplazar o borrar).", "autor": "Nombre del apoderado" }
+  ],
+
+  "contacto": {
+    "direccion": "Las Hualtatas 9082, Vitacura, Santiago",
+    "whatsapp": "56965092786",
+    "mensaje_whatsapp": "Hola, quiero agendar una visita al Jardín Be Happy",
+    "instagram": "jardinbehappy",
+    "email": "contacto@jardinbehappy.cl"
+  }
+}
